@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Canciones Románticas - Lorena y Alejandro</title>
+<link rel="icon" href="data:image/svg+xml,
+    <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'>
+        <text y='0.9em' font-size='85'>💖</text>
+    </svg>">
+<style>
+    body {
+        font-family: 'Segoe UI', sans-serif;
+        background: linear-gradient(to bottom right, #ffdde1, #ee9ca7);
+        color: #5a2a27;
+        padding: 20px;
+    }
+    h1 { text-align: center; font-size: 2.5em; }
+    .container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        max-width: 1200px;
+        margin: auto;
+    }
+    .song-list, .poem-box {
+        flex: 1;
+        min-width: 300px;
+        background: rgba(255, 255, 255, 0.85);
+        padding: 20px;
+        border-radius: 15px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    .song {
+        padding: 10px;
+        border-bottom: 1px solid #f3c6c6;
+    }
+    .song:last-child { border-bottom: none; }
+    .song-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+    button, a.download-btn {
+        background-color: #ff4d6d;
+        color: white;
+        border: none;
+        padding: 8px 12px;
+        border-radius: 8px;
+        cursor: pointer;
+        text-decoration: none;
+        font-size: 0.9em;
+        margin: 2px;
+    }
+    button:hover, a.download-btn:hover { background-color: #e63950; }
+    .download-all {
+        display: inline-block;
+        margin-bottom: 20px;
+        background-color: #ff85a1;
+        font-size: 1.1em;
+    }
+    audio {
+        width: 100%;
+        margin-top: 8px;
+    }
+    .poem-box {
+        text-align: center;
+        font-style: italic;
+        line-height: 1.6;
+        background: rgba(255, 240, 245, 0.9);
+    }
+    .poem-box h2 {
+        margin-bottom: 10px;
+        color: #d6336c;
+    }
+</style>
+</head>
+<body>
+
+<h1>💖 Canciones para el Corazón 💖</h1>
+
+<div class="container">
+    <!-- Lista de canciones -->
+    <div class="song-list">
+        <a href="media/Canciones Alejandro y Lorena.zip" class="download-btn download-all" download>⬇️ Descargar Todas</a>
+        <div id="songList"></div>
+    </div>
+
+    <!-- Poema romántico -->
+    <div class="poem-box" style="text-align:left; font-style:normal;">
+    <h2>💬 Nuestra Conversación 💬</h2>
+    <div style="background:rgba(255,255,255,0.85); padding:15px; border-radius:10px;">
+        <p><strong>[10:23 p. m., 2/9/2025] Lorena:</strong><br>
+        Sabes… vida mía, no sé cómo alguien en tan poco tiempo me llegó tanto al corazón y en tan pocos momentos me hice adictiva a escuchar sus pensamientos… cada uno me parecía más interesante que el otro, y yo solamente pensaba en que eran tan parecidos a los míos.  
+        Ahora se siente como un infarto al miocardio y mi electrocardiograma se acelera de solo pensar en lo que fuimos, y más en lo que extraño de él: sus besos, abrazos y risas…  
+        Y cuando cada conversación era más interesante que la otra, siento que si quisiera la compañía de alguien el resto de mi vida, sería la suya.</p>
+
+        <p><strong>[10:26 p. m., 2/9/2025] Alejandro:</strong><br>
+        Ño mi amor, es lo más lindo que me han dicho, y la verdad es que tú eres eso para mí.  
+        Es difícil no tenerte ahora, recordarte es duro cuando estemos lejos, pero saber que vamos a volver a vernos me da la alegría más linda.  
+        Sé que vamos a superar todo, la distancia es corta para nuestros pensamientos, y nuestro corazón ya es uno solo.  
+        Gracias por conocerme, te quiero.</p>
+    </div>
+</div>
+
+</div>
+
+<script>
+    const canciones = [
+        "Alejandro Fernández - Me Dediqué a Perderte.mp3",
+        "Alejandro Fernández Si Tú Supieras.mp3",
+        "Alex Warren - Ordinary.mp3",
+        "Antonio Orozco - Ya Lo Sabes.mp3",
+        "Cristian Castro Azul.mp3",
+        "Cristian Castro Por Amarte Así.mp3",
+        "Destino o Casualidad.mp3",
+        "Die With A Smile.mp3",
+        "Ed Sheeran Perfect.mp3",
+        "Ed Sheeran Thinking out Loud.mp3",
+        "Malú Blanco Y Negro.mp3",
+        "Melendi Tu jardín con enanitos.mp3",
+        "Sin Bandera Te Vi Venir.mp3",
+        "Somewhere over the Rainbow.mp3",
+        "Taylor Swift - Enchanted.mp3",
+        "Vicente Fernández - Que De Raro Tiene.mp3",
+        "Vicente Fernández - Un Millon De Primaveras.mp3"
+    ];
+
+    const contenedor = document.getElementById('songList');
+
+    canciones.forEach(nombre => {
+        const baseName = nombre.replace(/\.[^/.]+$/, "");
+        contenedor.innerHTML += `
+            <div class="song">
+                <div class="song-header">
+                    <span>💖 ${baseName}</span>
+                    <div>
+                        <button onclick="playSong(this, '${encodeURI('media/' + nombre)}')">▶️ Play</button>
+                        <a href="${encodeURI('media/' + nombre)}" class="download-btn" download>⬇️</a>
+                    </div>
+                </div>
+            </div>
+        `;
+    });
+
+    function playSong(button, src) {
+        document.querySelectorAll('.song audio').forEach(a => a.remove());
+        const audio = document.createElement('audio');
+        audio.controls = true;
+        audio.src = src;
+        audio.autoplay = true;
+        button.closest('.song').appendChild(audio);
+    }
+</script>
+
+</body>
+</html>
